@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>靓号优选平台</title>
+    <meta name="Keywords" content="靓号交易平台、号码靓号、手机靓号" />
+    <meta name="Description" content="专业靓号交易平台，提供移动、联通、电信优质靓号交易服务" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        /* 顶部导航 */
+        .m2-top {
+            background: linear-gradient(135deg, #0088ff, #0077cc);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .m2-top a {
+            margin-left: 15px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* 轮播图 */
+        .slide-box {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .swiper-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        
+        .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 0.4s ease;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .dottedNav {
+            width: 100%;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            position: absolute;
+            z-index: 110;
+            left: 0;
+            bottom: 15px;
+        }
+        
+        /* 销售记录 */
+        .sale-log {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sale-log::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 15px;
+            height: 100%;
+            background: linear-gradient(90deg, #ff9900, #ff5500);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+        
+        .sale-log-c {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .sale-log-left {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .sale-box {
+            background: linear-gradient(to right, #f0f9ff, #e6f7ff);
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .sale-box li {
+            padding: 8px;
+            border-bottom: 1px dashed #eee;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sale-box li:last-child {
+            border-bottom: none;
+        }
+        
+        .name {
+            color: #ff6633;
+            font-weight: bold;
+        }
+        
+        .num {
+            color: #ff4444;
+            font-weight: 600;
+        }
+
+        /* 底部导航 */
+        .tab-bar5 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 200;
+        }
+        
+        .top-menu {
+            flex: 1;
+            text-align: center;
+            padding: 12px 5px;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .top-menu-home, .top-menu-mycity, .top-menu-card, .top-menu-tejia, .top-menu-chaxun, .top-menu-contact {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .top-menu-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-size: cover;
+        }
+        
+        .top-menu-icon-card {
+            background-color: #0088ff;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            box-shadow: 0 2px 5px rgba(0,136,255,0.3);
+        }
+        
+        .top-menu-icon-card i {
+            display: none;
+        }
+        
+        .tab-bar-icon {
+            margin-bottom: 5px;
+            font-size: 20px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 搜索区域 */
+        .search-section {
+            padding: 10px 15px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            margin-bottom: 10px;
+        }
+        
+        .so-kw-type {
+            color: #ff6633;
+            font-weight: bold;
+        }
+        
+        .so-kw-input {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        #kw {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #e6e6e6;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .so-kw-btn {
+            width: 56px;
+            height: 36px;
+            background-color: #0088ff;
+            color: white;
+            border: 1px solid #0088ff;
+            border-radius: 20px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .so-kw-btn:hover {
+            background-color: #0077cc;
+        }
+        
+        .filter-bar {
+            display: flex;
+            background: linear-gradient(to right, #e6f7ff, #f0f9ff);
+            border-radius: 20px;
+            padding: 10px;
+            margin-top: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .filter-bar > div {
+            flex: 1;
+            padding: 8px 0;
+            font-size: 14px;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .filter-bar > div.nav-sel {
+            color: #0088ff;
+        }
+        
+        /* 号码列表 */
+        .box-mt {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 10px;
+        }
+        
+        .tab {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+        
+        .tab li {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .tab li.alt-tabs-head {
+            position: relative;
+            padding-top: 5px;
+        }
+        
+        .tab li.cur .icon {
+            color: #0088ff;
+        }
+        
+        .mb-list {
+            padding: 10px 0;
+        }
+        
+        .phone-item {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .phone-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+        
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .phone-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff3333;
+        }
+        
+        .phone-price {
+            color: #ff6633;
+            font-weight: bold;
+        }
+        
+        .phone-features {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .phone-footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 8px;
+        }
+        
+        .phone-owner {
+            color: #777;
+        }
+
+        .phone-actions {
+            display: flex;
+        }
+        
+        .phone-actions button {
+            background-color: #0088ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .phone-actions button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* 加载更多 */
+        .loadmore {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0088ff;
+            font-weight: bold;
+        }
+
+        /* 底部导航 */
+        .gotop {
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .filter-bar {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 5px;
+            }
+            
+            .so-kw-input {
+                margin: 8px 0;
+            }
+            
+            #kw {
+                font-size: 15px;
+            }
+            
+            .phone-number {
+                font-size: 18px;
+            }
+        }
+        
+        .noresult {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 10px;
+        }
+        
+        .noresult img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="m2-top">
+        <a href="#">靓号中心</a>
+        <a href="#">订单查询</a>
+    </div>
+    
+    <!-- 轮播图 -->
+    <div class="slide-box">
+        <ul class="swiper-wrapper">
+            <li class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1593055876032-862ebf8d9f01?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="靓号交易" />
+            </li>
+            <li class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1511795326177-35c46033ffa0?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="手机靓号" />
+            </li>
+            <li class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1581052113048-073e18159336?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="靓号优选" />
+            </li>
+        </ul>
+        <p class="dottedNav"></p>
+    </div>
+    
+    <!-- 销售记录 -->
+    <div class="sale-log">
+        <div class="sale-log-c clearfix">
+            <div>
+                <div class="sale-log-left">已有10,000人获得</div>
+                <div class="sale-box">
+                    <ul class="swiper-wrapper">
+                        <li><span class="name">李**</span>获得<span class="num">188****1234</span></li>
+                        <li><span class="name">张**</span>获得<span class="num">170****5678</span></li>
+                        <li><span class="name">王**</span>获得<span class="num">158****9999</span></li>
+                        <li><span class="name">赵**</span>获得<span class="num">186****8888</span></li>
+                        <li><span class="name">孙**</span>获得<span class="num">138****0000</span></li>
+                        <li><span class="name">周**</span>获得<span class="num">158****1111</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="tab-bar5 clearfix top-menu">
+        <div class="top-menu-home"><a href="#"><span class="tab-bar-icon"><i class="fas fa-home"></i></span><span class="tab-bar-text">靓号中心</span></a></div>
+        <div class="top-menu-mycity"><a href="#"><span class="tab-bar-icon"><i class="fas fa-map-marker-alt"></i></span><span class="tab-bar-text">本地号码</span></a></div>
+        <div class="top-menu-changeprice"><a href="#"><span class="tab-bar-icon"><i class="fas fa-money-bill-wave"></i></span><span class="tab-bar-text">改价专区</span></a></div>
+        <div class="top-menu-card"><a href="#"><span class="tab-bar-icon"><i class="fas fa-mobile-alt"></i></span><span class="tab-bar-text">流量卡</span></a></div>
+        <div class="top-menu-tejia"><a href="#"><span class="tab-bar-icon"><i class="fas fa-gavel"></i></span><span class="tab-bar-text">秒杀专区</span></a></div>
+        <div class="top-menu-chaxun"><a href="#"><span class="tab-bar-icon"><i class="fas fa-search-dollar"></i></span><span class="tab-bar-text">订单查询</span></a></div>
+        <div class="top-menu-notice"><a href="#"><span class="tab-bar-icon"><i class="fas fa-info-circle"></i></span><span class="tab-bar-text">选号须知</span></a></div>
+        <div class="top-menu-contact"><a href="#"><span class="tab-bar-icon"><i class="fas fa-headset"></i></span><span class="tab-bar-text">联系客服</span></a></div>
+    </div>
+    
+    <!-- 搜索区域 -->
+    <div class="search-section">
+        <div class="top-bar">
+            <span class="so-kw-type">模糊</span>
+        </div>
+        
+        <div class="so-kw-input">
+            <input type="tel" id="kw" placeholder="输入您喜欢的数字" />
+            <span class="so-kw-cb-box">
+                <input type="checkbox" id="cbIsEnd" checked />
+                <label for="cbIsEnd">尾号</label>
+            </span>
+        </div>
+        
+        <button class="so-kw-btn" id="searchBtn">搜索</button>
+    </div>
+    
+    <!-- 结果区域 -->
+    <div class="box-mt">
+        <div class="tab">
+            <ul class="title">
+                <li data-val="0" class="alt-tabs-head orderItem cur"><i class="fas fa-sort-numeric-down"></i>综合排序</li>
+                <li data-val="1" class="alt-tabs-head orderItem"><i class="fas fa-tag"></i>价格从低到高</li>
+                <li data-val="2" class="alt-tabs-head orderItem"><i class="fas fa-tags"></i>价格从高到低</li>
+            </ul>
+        </div>
+        
+        <ul class="mb-list clearfix" id="phoneList">
+            <!-- 号码列表将通过JavaScript动态生成 -->
+        </ul>
+        
+        <div class="loadmore">加载更多</div>
+    </div>
+    
+    <!-- 返回顶部 -->
+    <div class="gotop">
+        <img src="https://cdn-icons-png.flaticon.com/512/2504/2504980.png" width="30" height="40" alt="返回顶部" />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.4/swiper-bundle.min.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化轮播图
+            var swiper = new Swiper('.slide-box', {
+                pagination: '.dottedNav',
+                spaceBetween: 0,
+                centeredSlides: true,
+                autoplay: 3500,
+                loop: true,
+                autoplayDisableOnInteraction: false
+            });
+            
+            // 生成示例手机号数据
+            const prefixPhoneNumbers = [
+                {company: '电信', data: ['13305455555', '15556788888', '15337799999']},
+                {company: '联通', data: ['13012345678', '13188899900', '13256789012']},
+                {company: '移动', data: ['13499900000', '15156789123', '15288899900']},
+                {company: '电信', data: ['13578912345', '15700011122', '18833344455']}
+            ];
+            
+            // 生成号码列表
+            function generatePhoneList() {
+                const phoneListElement = document.getElementById('phoneList');
+                phoneListElement.innerHTML = '';
+                
+                const mockPhones = [
+                    {number: '18812345678', price: '¥399', company: '移动', features: '尾三位888', owner: '王*'},
+                    {number: '13188889999', price: '¥288', company: '联通', features: '全5A', owner: '李*'},
+                    {number: '13301011111', price: '¥499', company: '电信', features: '全33', owner: '张*'},
+                    {number: '15888887777', price: '¥228', company: '移动', features: '中间8个8', owner: '赵*'},
+                    {number: '18655554444', price: '¥358', company: '联通', features: '尾666', owner: '孙*'},
+                    {number: '15200001111', price: '¥199', company: '移动', features: '尾七个零', owner: '钱*'},
+                    {number: '13355550000', price: '¥428', company: '电信', features: '尾九九', owner: '周*'},
+                    {number: '13099998888', price: '¥268', company: '联通', features: '前六个九', owner: '吴*'}
+                ];
+                
+                mockPhones.forEach(phone => {
+                    const li = document.createElement('li');
+                    li.className = 'phone-item';
+                    
+                    // 在实际应用中，这些数据应该来自后端API
+                    const mobileData = {
+                        number: phone.number,
+                        company: phone.company,
+                        price: phone.price,
+                        features: phone.features,
+                        owner: phone.owner
+                    };
+                    
+                    li.innerHTML = `
+                        <div class="phone-header">
+                            <div class="phone-number">${mobileData.number}</div>
+                            <div class="phone-price">${mobileData.price}</div>
+                        </div>
+                        <div class="phone-features">${mobileData.features}</div>
+                        <div class="phone-footer">
+                            <div class="phone-owner">买家：${mobileData.owner}</div>
+                            <div class="phone-actions">
+                                <button class="btn-like">喜欢</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    phoneListElement.appendChild(li);
+                });
+                
+                // 添加排序功能
+                addSortFunctionality();
+            }
+            
+            // 添加排序功能
+            function addSortFunctionality() {
+                document.querySelectorAll('.orderItem').forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        document.querySelectorAll('.orderItem').forEach(t => t.classList.remove('cur'));
+                        this.classList.add('cur');
+                    });
+                });
+                
+                document.getElementById('searchBtn').addEventListener('click', function() {
+                    document.getElementById('kw').value = '135' + generateRandomNumber(135) + '-' + generateRandomNumber(8);
+                });
+            }
+            
+            // 辅助函数：生成随机数
+            function generateRandomNumber(maxLength) {
+                const length = Math.floor(Math.random() * 4) + 6; // 6到10位数字
+                let num = '';
+                for (let i = 0; i < length; i++) {
+                    num += Math.floor(Math.random() * 10);
+                }
+                return num;
+            }
+            
+            // 初始化号码列表
+            generatePhoneList();
+            
+            // 点击返回顶部
+            document.querySelector('.gotop').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // 监听滚动事件，显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    document.querySelector('.gotop').style.display = 'flex';
+                } else {
+                    document.querySelector('.gotop').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
